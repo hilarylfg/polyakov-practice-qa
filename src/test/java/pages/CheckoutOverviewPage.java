@@ -1,0 +1,44 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import utils.SauceDemoConfig;
+
+import java.util.List;
+
+/** Шаг 2 оформления заказа Swag Labs (/checkout-step-two.html) — обзор заказа. */
+public class CheckoutOverviewPage extends BasePage {
+
+    private final By INVENTORY_ITEM_NAME = By.cssSelector("[data-test=inventory-item-name]");
+    private final By SUBTOTAL_LABEL = By.cssSelector("[data-test=subtotal-label]");
+    private final By TOTAL_LABEL = By.cssSelector("[data-test=total-label]");
+    private final By FINISH_BUTTON = By.id("finish");
+
+    public CheckoutOverviewPage(WebDriver driver) {
+        super(driver, SauceDemoConfig.EXPLICIT_TIMEOUT);
+        waitForVisibility(SUBTOTAL_LABEL);
+    }
+
+    public List<String> getItemNames() {
+        return getAllTexts(INVENTORY_ITEM_NAME);
+    }
+
+    /** Сумма товаров, из подписи вида «Item total: $29.99». */
+    public double getSubtotalAmount() {
+        return parseAmount(getText(SUBTOTAL_LABEL));
+    }
+
+    /** Итоговая сумма с налогом, из подписи вида «Total: $32.39». */
+    public double getTotalAmount() {
+        return parseAmount(getText(TOTAL_LABEL));
+    }
+
+    public CheckoutCompletePage finishOrder() {
+        clickUntilEffect(FINISH_BUTTON, d -> d.getCurrentUrl().contains("checkout-complete.html"));
+        return new CheckoutCompletePage(driver);
+    }
+
+    private double parseAmount(String label) {
+        return Double.parseDouble(label.replaceAll("[^0-9.]", ""));
+    }
+}
