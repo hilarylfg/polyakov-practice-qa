@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.SauceDemoConfig;
@@ -33,6 +34,7 @@ public class CheckoutOverviewPage extends BasePage {
         return parseAmount(getText(TOTAL_LABEL));
     }
 
+    @Step("Сверить итоговую сумму и завершить заказ")
     public CheckoutCompletePage finishOrder() {
         clickUntilEffect(FINISH_BUTTON, d -> d.getCurrentUrl().contains("checkout-complete.html"));
         return new CheckoutCompletePage(driver);

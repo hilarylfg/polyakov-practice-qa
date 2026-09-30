@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,18 +34,18 @@ public class InventoryPage extends BasePage {
         waitForVisibility(INVENTORY_LIST);
     }
 
+    @Step("Чтение заголовка каталога")
     public String getPageTitle() {
         return getText(PAGE_TITLE);
     }
 
-    /** Добавляет товар в корзину и дожидается увеличения счётчика —
-     *  React обновляет бейдж асинхронно после клика. */
+    @Step("Добавить в корзину товар «{itemId}»")
     public void addItemToCart(String itemId) {
         int countBefore = readCartBadgeCount();
         clickUntilEffect(By.id("add-to-cart-" + itemId), d -> readCartBadgeCount() == countBefore + 1);
     }
 
-    /** Удаляет товар из корзины и дожидается уменьшения счётчика. */
+    @Step("Удалить из корзины товар «{itemId}»")
     public void removeItemFromCart(String itemId) {
         int countBefore = readCartBadgeCount();
         clickUntilEffect(By.id("remove-" + itemId), d -> readCartBadgeCount() == countBefore - 1);
@@ -70,12 +71,14 @@ public class InventoryPage extends BasePage {
                 .collect(Collectors.toList());
     }
 
+    @Step("Сортировка каталога: {option}")
     public void sortBy(SortOption option) {
         waitForVisibility(SORT_CONTAINER);
         Select sortDropdown = new Select(driver.findElement(SORT_CONTAINER));
         sortDropdown.selectByValue(option.getValue());
     }
 
+    @Step("Открыть корзину")
     public CartPage openCart() {
         clickUntilEffect(CART_LINK, d -> d.getCurrentUrl().contains("cart.html"));
         return new CartPage(driver);

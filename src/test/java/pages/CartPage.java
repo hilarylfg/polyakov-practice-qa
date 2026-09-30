@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.SauceDemoConfig;
@@ -30,6 +31,7 @@ public class CartPage extends BasePage {
                 .collect(Collectors.toList());
     }
 
+    @Step("Перейти к оформлению заказа")
     public CheckoutPage startCheckout() {
         clickUntilEffect(CHECKOUT_BUTTON, d -> d.getCurrentUrl().contains("checkout-step-one.html"));
         return new CheckoutPage(driver);
