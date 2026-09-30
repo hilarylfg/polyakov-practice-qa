@@ -1,5 +1,11 @@
 package tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.InventoryPage;
@@ -7,9 +13,14 @@ import pages.LoginPage;
 import utils.SauceDemoConfig;
 
 /** Сценарии авторизации Swag Labs (позитивные и негативные). */
+@Epic("Swag Labs (saucedemo.com)")
+@Feature("Авторизация")
+@Owner("Иван Полеяков")
 public class LoginTests extends BaseTest {
 
     @Test(description = "Позитивная авторизация standard_user: переход на /inventory.html и заголовок Products")
+    @Story("Успешный вход валидным пользователем")
+    @Severity(SeverityLevel.BLOCKER)
     public void testSuccessfulLogin() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(SauceDemoConfig.STANDARD_USER, SauceDemoConfig.PASSWORD);
@@ -23,6 +34,8 @@ public class LoginTests extends BaseTest {
     }
 
     @Test(description = "Негативная авторизация locked_out_user: сообщение о блокировке")
+    @Story("Блокировка пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     public void testLockedOutUserLogin() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(SauceDemoConfig.LOCKED_OUT_USER, SauceDemoConfig.PASSWORD);
@@ -35,6 +48,8 @@ public class LoginTests extends BaseTest {
     }
 
     @Test(description = "Негативная авторизация с неверным паролем: сообщение о несоответствии данных")
+    @Story("Неверный пароль")
+    @Severity(SeverityLevel.CRITICAL)
     public void testInvalidPasswordLogin() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(SauceDemoConfig.STANDARD_USER, "wrong_password");
