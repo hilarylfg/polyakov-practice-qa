@@ -8,10 +8,10 @@
 
 | Артефакт | Значение |
 |---|---|
-| Репозиторий | https://github.com/hilarylfg/practice-qa-polyakov |
+| Репозиторий | https://github.com/hilarylfg/polyakov-practice-qa |
 | Feature-ветка | `feature/polyakov_saucedemo_allure` |
-| Pull Request | https://github.com/hilarylfg/practice-qa-polyakov/pull/2 |
-| Последний коммит | см. `git rev-parse HEAD` (указан в PR) |
+| Pull Request | https://github.com/hilarylfg/polyakov-practice-qa/pull/3 |
+| Последний коммит | `ede0b46` — `chore: ignore locally downloaded allure cli` |
 
 Работа выполняется поверх ветки `feature/polyakov_saucedemo` (практика №13): существующий
 набор из 11 тестов saucedemo.com дополнен отчётностью Allure и кроссбраузерным прогоном.
